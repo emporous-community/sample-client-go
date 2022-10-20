@@ -93,7 +93,7 @@ func (o *PullOptions) Run(ctx context.Context) error {
 	config := managerapi.RegistryConfig{
 		Auth:          cred,
 		PlainHttp:     o.PlainHTTP,
-		SkipTlsVerify: o.SkipTLS,
+		SkipTlsVerify: o.SkipTLSVerify,
 	}
 	req.Config = &config
 

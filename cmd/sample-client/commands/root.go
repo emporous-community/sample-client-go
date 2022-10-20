@@ -16,7 +16,7 @@ import (
 type RootOptions struct {
 	IOStreams     genericclioptions.IOStreams
 	ServerAddress string
-	SkipTLS       bool
+	SkipTLSVerify bool
 	PlainHTTP     bool
 }
 
@@ -40,7 +40,7 @@ func NewRootCmd() *cobra.Command {
 	}
 
 	cmd.PersistentFlags().StringVarP(&o.ServerAddress, "socket-address", "s", "/var/run/uor.sock", "location of unix domain socket")
-	cmd.PersistentFlags().BoolVar(&o.SkipTLS, "skip-tls", o.SkipTLS, "allow connections to registries SSL registry without certs")
+	cmd.PersistentFlags().BoolVar(&o.SkipTLSVerify, "skip-tls-verify", o.SkipTLSVerify, "disable TLS certificate verification when contacting registries")
 	cmd.PersistentFlags().BoolVar(&o.PlainHTTP, "plain-http", o.PlainHTTP, "use plain http and not https when contacting registries")
 
 	cmd.AddCommand(NewPullCmd(&o))
