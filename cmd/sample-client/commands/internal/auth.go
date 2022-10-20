@@ -20,6 +20,9 @@ func GetCredentials(reference string) (*managerapi.AuthConfig, error) {
 	}
 	cfg, err := loadDefaultConfig()
 	if err != nil {
+		if os.IsNotExist(err) {
+			return nil, nil
+		}
 		return nil, err
 	}
 
