@@ -90,7 +90,12 @@ func (o *PullOptions) Run(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-	req.Auth = cred
+	config := managerapi.RegistryConfig{
+		Auth:          cred,
+		PlainHttp:     o.PlainHTTP,
+		SkipTlsVerify: o.SkipTLS,
+	}
+	req.Config = &config
 
 	resp, err := client.RetrieveContent(ctx, &req)
 	if err != nil {
