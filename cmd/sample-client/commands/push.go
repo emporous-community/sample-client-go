@@ -100,7 +100,12 @@ func (o *PushOptions) Run(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-	req.Auth = cred
+	config := managerapi.RegistryConfig{
+		Auth:          cred,
+		PlainHttp:     o.PlainHTTP,
+		SkipTlsVerify: o.SkipTLSVerify,
+	}
+	req.Config = &config
 
 	resp, err := client.PublishContent(ctx, &req)
 	if err != nil {
