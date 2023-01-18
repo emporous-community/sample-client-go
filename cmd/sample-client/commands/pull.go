@@ -6,12 +6,13 @@ import (
 	"fmt"
 	"path/filepath"
 
+	managerapi "github.com/emporous/emporous-go/api/services/collectionmanager/v1alpha1"
+	"github.com/emporous/emporous-go/config"
 	"github.com/spf13/cobra"
-	managerapi "github.com/uor-framework/uor-client-go/api/services/collectionmanager/v1alpha1"
-	"github.com/uor-framework/uor-client-go/config"
 	"google.golang.org/protobuf/types/known/structpb"
+	"gopkg.in/square/go-jose.v2/json"
 
-	"github.com/uor-community/sample-client-go/cmd/sample-client/commands/internal"
+	"github.com/emporous-community/sample-client-go/cmd/sample-client/commands/internal"
 )
 
 // PullOptions describe configuration options that can
@@ -29,7 +30,7 @@ func NewPullCmd(rootOpts *RootOptions) *cobra.Command {
 
 	cmd := &cobra.Command{
 		Use:           "pull SRC",
-		Short:         "Pull a UOR collection based on content or attribute address",
+		Short:         "Pull an Emporous collection based on content or attribute address",
 		SilenceErrors: false,
 		SilenceUsage:  false,
 		Args:          cobra.ExactArgs(1),
@@ -77,12 +78,15 @@ func (o *PullOptions) Run(ctx context.Context) error {
 		if err != nil {
 			return err
 		}
-
-		filter, err := structpb.NewStruct(query.Attributes)
+		var attributes map[string]interface{}
+		err = json.Unmarshal(query.Attributes, &attributes)
 		if err != nil {
 			return err
 		}
-
+		filter, err := structpb.NewStruct(attributes)
+		if err != nil {
+			return err
+		}
 		req.Filter = filter
 	}
 

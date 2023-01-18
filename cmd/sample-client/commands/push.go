@@ -6,11 +6,11 @@ import (
 	"fmt"
 	"path/filepath"
 
+	managerapi "github.com/emporous/emporous-go/api/services/collectionmanager/v1alpha1"
 	"github.com/spf13/cobra"
-	managerapi "github.com/uor-framework/uor-client-go/api/services/collectionmanager/v1alpha1"
 	"google.golang.org/protobuf/types/known/structpb"
 
-	"github.com/uor-community/sample-client-go/cmd/sample-client/commands/internal"
+	"github.com/emporous-community/sample-client-go/cmd/sample-client/commands/internal"
 )
 
 // PushOptions describe configuration options that can
@@ -27,7 +27,7 @@ func NewPushCmd(rootOpts *RootOptions) *cobra.Command {
 
 	cmd := &cobra.Command{
 		Use:           "push SRC DST",
-		Short:         "Build and push a UOR collection from a workspace",
+		Short:         "Build and push an Emporous collection from a workspace",
 		SilenceErrors: false,
 		SilenceUsage:  false,
 		Args:          cobra.ExactArgs(2),
