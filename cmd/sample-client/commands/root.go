@@ -6,8 +6,8 @@ import (
 	"os"
 	"path/filepath"
 
+	managerapi "github.com/emporous/emporous-go/api/services/collectionmanager/v1alpha1"
 	"github.com/spf13/cobra"
-	managerapi "github.com/uor-framework/uor-client-go/api/services/collectionmanager/v1alpha1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"k8s.io/cli-runtime/pkg/genericclioptions"
@@ -37,7 +37,7 @@ func NewRootCmd() *cobra.Command {
 		},
 	}
 
-	cmd.PersistentFlags().StringVarP(&o.ServerAddress, "socket-address", "s", "/var/run/uor.sock", "location of unix domain socket")
+	cmd.PersistentFlags().StringVarP(&o.ServerAddress, "socket-address", "s", "/var/run/emporous.sock", "location of unix domain socket")
 
 	cmd.AddCommand(NewPullCmd(&o))
 	cmd.AddCommand(NewPushCmd(&o))

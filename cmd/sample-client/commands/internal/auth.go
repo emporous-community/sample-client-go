@@ -9,7 +9,7 @@ import (
 	"github.com/docker/cli/cli/config"
 	"github.com/docker/cli/cli/config/configfile"
 	"github.com/docker/cli/cli/config/credentials"
-	managerapi "github.com/uor-framework/uor-client-go/api/services/collectionmanager/v1alpha1"
+	managerapi "github.com/emporous/emporous-go/api/services/collectionmanager/v1alpha1"
 )
 
 // GetCredentials returns an AuthConfig resource for a given reference.
@@ -19,6 +19,10 @@ func GetCredentials(reference string) (*managerapi.AuthConfig, error) {
 		return nil, err
 	}
 	cfg, err := loadDefaultConfig()
+	if os.IsNotExist(err) {
+		// No default auth.json file exists
+		return &managerapi.AuthConfig{}, nil
+	}
 	if err != nil {
 		return nil, err
 	}
